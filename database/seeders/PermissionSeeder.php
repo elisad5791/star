@@ -26,6 +26,8 @@ class PermissionSeeder extends Seeder
             Permission::firstOrCreate($permission, $permission);
         }
 
+        $role = Role::find(1);
+        $role->permissions()->sync([1, 2, 3, 4, 5, 6]);
         $role = Role::find(3);
         $role->permissions()->sync([1, 2]);
         $role = Role::find(4);

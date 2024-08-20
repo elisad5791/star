@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Main\Controller;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Profile\IndexRequest;
 use App\Http\Requests\Api\Profile\StoreRequest;
 use App\Http\Requests\Api\Profile\UpdateRequest;

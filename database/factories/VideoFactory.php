@@ -19,9 +19,14 @@ class VideoFactory extends Factory
      */
     public function definition(): array
     {
+        $count = mt_rand(1, 3);
+        $urlArray = [];
+        for ($i = 1; $i <= $count; $i++) {
+            $urlArray[] = fake()->imageUrl(640, 480);
+        }
         return [
             'title' => ucfirst(fake()->words(3, true)),
-            'url' => fake()->url,
+            'url' => $urlArray,
             'profile_id' => User::inRandomOrder()->first()->profile->id,
             'category_id' => Category::inRandomOrder()->first()->id
         ];

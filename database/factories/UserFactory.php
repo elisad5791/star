@@ -24,6 +24,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            'name' => 'user' . mt_rand(1, 999),
             'email' => fake()->unique()->safeEmail(),
             'password' => Hash::make('password')
         ];

@@ -10,7 +10,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'description' => ['string']
+            'description' => ['required', 'string']
         ];
     }
 }

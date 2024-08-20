@@ -9,11 +9,11 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string'],
-            'slug' => ['required', 'string'],
-            'content' => ['required', 'string'],
-            'user_id' => ['required', 'integer', 'exists:users,id'],
-            'category_id' => ['integer', 'exists:categories,id']
+            'article' => ['required', 'array'],
+            'article.title' => ['required', 'string'],
+            'article.content' => ['required', 'string'],
+            'article.category_id' => ['nullable', 'integer', 'exists:categories,id'],
+            'tags' => ['nullable', 'array']
         ];
     }
 }

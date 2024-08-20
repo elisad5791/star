@@ -74,4 +74,14 @@ class Post extends Model
             get: fn() => $this->likes->map(fn($like) => trim($like->first_name . ' ' . $like->last_name))->all()
         );
     }
+
+    public function getLikeCounterAttribute()
+    {
+        return $this->likes()->count();
+    }
+
+    public function getTagArrayAttribute()
+    {
+        return $this->tags->map(fn($item) => $item->only('id', 'title'))->toArray();
+    }
 }

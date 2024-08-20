@@ -9,7 +9,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['string', 'email']
+            'name' => ['required', 'string'],
+            'email' => ['required', 'string']
         ];
     }
 }

@@ -19,4 +19,14 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class);
     }
+
+    public function getPermissionTitlesAttribute()
+    {
+        return $this->permissions->pluck('title')->toArray();
+    }
+
+    public function getUserNamesAttribute()
+    {
+        return $this->users->map(fn($item) => $item->first_name . ' ' . $item->last_name)->toArray();
+    }
 }

@@ -19,10 +19,19 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $user = User::factory()->create([
+            'name' => 'client',
             'email' => 'client@mail.ru',
             'password' => Hash::make('password')
         ]);
-        $user->permissions()->sync([1, 2, 3, 4, 5, 6]);
+        $user->roles()->sync([1]);
+        Profile::factory()->create(['profileable_id' => $user->id, 'profileable_type' => User::class]);
+
+        $user = User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@mail.ru',
+            'password' => Hash::make('password')
+        ]);
+        $user->roles()->sync([1]);
         Profile::factory()->create(['profileable_id' => $user->id, 'profileable_type' => User::class]);
 
         $users = User::factory(10)->create();

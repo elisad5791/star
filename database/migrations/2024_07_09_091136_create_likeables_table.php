@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('likeables', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('profile_id')->index()->constrained('profiles');
+            $table->morphs('likeable');
             $table->timestamps();
         });
     }

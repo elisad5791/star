@@ -120,4 +120,9 @@ class Profile extends Model
             get: fn() => $this->likedComments->map(fn($comment) => Str::limit($comment->content, 20))->all()
         );
     }
+
+    public function getProfileableTitleAttribute()
+    {
+        return $this->profileable->title;
+    }
 }

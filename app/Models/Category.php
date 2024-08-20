@@ -47,4 +47,19 @@ class Category extends Model
             get: fn() => $this->videos->pluck('title')->all()
         );
     }
+
+    public function getPostCounterAttribute()
+    {
+        return $this->posts()->count();
+    }
+
+    public function getPictureCounterAttribute()
+    {
+        return $this->pictures()->count();
+    }
+
+    public function getVideoCounterAttribute()
+    {
+        return $this->videos()->count();
+    }
 }

@@ -9,11 +9,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'content' => ['string'],
-            'user_id' => ['integer', 'exists:users,id'],
-            'post_id' => ['integer', 'exists:posts,id'],
-            'likes' => ['integer'],
-            'status' => ['integer']
+            'content' => ['required', 'string']
         ];
     }
 }

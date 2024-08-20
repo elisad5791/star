@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('pictures', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('url');
+            $table->foreignId('profile_id')->index()->constrained('profiles');
+            $table->foreignId('category_id')->index()->constrained('categories');
             $table->timestamps();
         });
     }

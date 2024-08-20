@@ -10,12 +10,13 @@ class StoreRequest extends FormRequest
     {
         return [
             'first_name' => ['required', 'string'],
-            'second_name' => ['string'],
-            'last_name' => ['string'],
-            'login' => ['string'],
-            'phone' => ['string'],
-            'age' => ['integer'],
-            'status' => ['integer']
+            'second_name' => ['nullable', 'string'],
+            'last_name' => ['nullable', 'string'],
+            'login' => ['nullable', 'string'],
+            'phone' => ['nullable', 'string'],
+            'age' => ['nullable', 'string'],
+            'profilable_type' => ['required', 'string'],
+            'profilable_id' => ['required', 'integer']
         ];
     }
 }

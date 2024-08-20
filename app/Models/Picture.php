@@ -6,6 +6,7 @@ use App\Models\Traits\HasFilter;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Picture extends Model
@@ -71,5 +72,23 @@ class Picture extends Model
         return new Attribute(
             get: fn() => $this->likes->map(fn($like) => trim($like->first_name . ' ' . $like->last_name))->all()
         );
+    }
+
+    public function getLikeCounterAttribute()
+    {
+        return $this->likes()->count();
+    }
+
+    public function getTagArrayAttribute()
+    {
+        return $this->tags->map(fn($item) => $item->only('id', 'title'))->toArray();
+    }
+
+    public function getImgUrlAttribute()
+    {
+        if (Str::startsWith($this->url, 'https://')) {
+            return $this->url;
+        }
+        return Storage::disk('public')->url($this->url);
     }
 }
