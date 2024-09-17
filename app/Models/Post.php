@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use App\Models\Traits\HasEventLogs;
 use App\Models\Traits\HasFilter;
+use App\Observers\PostObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+#[ObservedBy([PostObserver::class])]
 class Post extends Model
 {
     use HasFactory;
     use HasFilter;
-    use HasEventLogs;
 
     public function profile()
     {

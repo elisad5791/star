@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Post\IndexRequest;
 use App\Http\Requests\Admin\Post\StoreRequest;
 use App\Http\Requests\Admin\Post\UpdateRequest;
 use App\Http\Resources\Admin\Post\CategoryResource;
@@ -14,14 +15,18 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Services\Admin\PostService;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(IndexRequest $request)
     {
-        $posts = IndexResource::collection(Post::latest()->get())->resolve();
-        return inertia('Admin/Post/Index', compact('posts'));
+        $search = $request->validated();
+        $key = md5(implode($search));
+        $posts = Cache::remember($key, now()->addMinutes(10), function () use ($search) {
+            return IndexResource::collection(Post::filter($search)->paginate(10)->withQueryString());
+        });
+        return inertia('Admin/Post/Index', compact('posts', 'search'));
     }
 
     public function show(Post $post)

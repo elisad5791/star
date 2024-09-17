@@ -13,7 +13,8 @@ class IndexResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'profile_name' => $this->profile_name,
-            'category_title' => $this->category_title
+            'category_title' => $this->category_title,
+            'created_at' => $this->created_at->format('d.m.Y H:i')
         ];
     }
 }

@@ -2,10 +2,8 @@
 
 namespace App\Observers;
 
-use App\Events\LogFinishEvent;
-use App\Events\LogStartEvent;
-use App\Models\Log;
 use App\Models\Post;
+use Illuminate\Support\Facades\Cache;
 
 class PostObserver
 {
@@ -14,11 +12,7 @@ class PostObserver
      */
     public function created(Post $post): void
     {
-        $data = $post->getAttributes();
-
-        LogStartEvent::dispatch();
-        Log::create(['event' => 'Post created', 'new_fields' => $data]);
-        LogFinishEvent::dispatch();
+        Cache::clear();
     }
 
     /**
@@ -26,17 +20,7 @@ class PostObserver
      */
     public function updated(Post $post): void
     {
-        $newData = $post->getDirty();
-        $newData['id'] = $post->id;
-
-        $keys = array_keys($newData);
-        $oldData = $post->getOriginal();
-        $oldData = array_filter($oldData, fn($key) => in_array($key, $keys), ARRAY_FILTER_USE_KEY);
-        $oldData['id'] = $post->id;
-
-        LogStartEvent::dispatch();
-        Log::create(['event' => 'Post updated', 'new_fields' => $newData, 'old_fields' => $oldData]);
-        LogFinishEvent::dispatch();
+        Cache::clear();
     }
 
     /**
@@ -44,22 +28,6 @@ class PostObserver
      */
     public function deleted(Post $post): void
     {
-        $data = $post->getAttributes();
-
-        LogStartEvent::dispatch();
-        Log::create(['event' => 'Post deleted', 'old_fields' => $data]);
-        LogFinishEvent::dispatch();
-    }
-
-    /**
-     * Handle the Post "restored" event.
-     */
-    public function retrieved(Post $post): void
-    {
-        $data = ['id' => $post->id];
-
-        LogStartEvent::dispatch();
-        Log::create(['event' => 'Post retrieved', 'old_fields' => $data, 'new_fields' => $data]);
-        LogFinishEvent::dispatch();
+        Cache::clear();
     }
 }
